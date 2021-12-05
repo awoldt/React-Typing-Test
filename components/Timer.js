@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 
 const Timer = ({ showTimer, finished }) => {
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(60);
 
   useEffect(() => {
     const timer = setInterval(() => {
