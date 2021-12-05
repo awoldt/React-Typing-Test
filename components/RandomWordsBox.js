@@ -36,14 +36,14 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       console.log(spelling);
       console.log("------");
       console.log(
-        currentSpelling[charIndex - 1] + " to " + currentTyped[charIndex - 1]
+        currentSpelling[charIndex - 1] + " to " + currentTyped[charIndex]
       );
     }
   }
 
   function tallyScore(word, spelling) {
     //CORRECT
-    if (word === spelling) {
+    if (word === spelling.toLowerCase()) {
       console.log("POINT");
       console.log(word + " to " + spelling);
       var x = [...score];
@@ -62,23 +62,21 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   function removeSpaces(word) {
     const x = word.split(" ");
-    console.log(x)
 
-    console.log(x.indexOf(""))
-
-    //remove space from word 
-    if(x.indexOf("") === 1) {
+    //remove space from word
+    if (x.indexOf("") === 1) {
       return x[0];
-    }
-    else {
-      return x[0]
+    } else {
+      return x[0];
     }
   }
 
   useEffect(() => {
+    setCurrentWordLength(currentWord.length);
     //check spelling only if user has inputed something
     if (currentTyped !== "") {
       checkSpelling(currentWord, currentTyped, currentCharIndex);
+      
     }
   }, [currentTyped]);
 
@@ -90,46 +88,78 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       <br></br>
       <br></br>
       {wordsData.map((x, index) => {
-        return (
+
+        if(currentWordIndex === index) {
+return (
           <div
-            style={{ display: "inline-block", marginRight: "10px" }}
+            style={{ display: "inline-block", marginRight: "10px", backgroundColor: 'yellow', padding: '10px', borderRadius: '10px'}}
             key={index}
           >
             <span>{x}</span>
           </div>
         );
+        } else {
+          return (
+            <div
+              style={{ display: "inline-block", marginRight: "10px", backgroundColor: 'white', padding: '10px', borderRadius: '10px'}}
+              key={index}
+            >
+              <span>{x}</span>
+            </div>
+          );
+        }
+
+
+        
       })}
       <br></br>
       <br></br>
       <input
         type="text"
-        onKeyUp={(e) => {
-          //BACKSPACE
-          if (e.key === "Backspace") {
-            setCurrentCharIndex((currentCharIndex -= 1));
-            setCurrentTyped(currentTyped.substring(0, currentTyped.length - 1));
-          } else {
-            //SPACE
-            if (e.key === " ") {
-              //if space after last word, end test
-              if (wordsData.length === currentWordIndex + 1) {
-                removeSpaces(currentTyped)
-                tallyScore(currentWord, currentTyped);
-                alert("end of test");
-                inputRef.current.value = "";
-              } else {
-                tallyScore(currentWord, removeSpaces(currentTyped)); //remove spaces if input is too fast and factors space in when comparing strings
-                setCurrentWordIndex((currentWordIndex += 1));
-                setCurrentWord(wordsData[currentWordIndex]);
-                setCurrentSpelling(wordsSpellings[currentWordIndex]);
-                setCurrentCharIndex(0);
-                inputRef.current.value = "";
-              }
-              //CHARACTER INPUT
+        onKeyDown={(e) => {
+          //SPACE
+          if (e.key === " ") {
+            console.log("space");
+            //if space after last word, end test
+            if (wordsData.length === currentWordIndex + 1) {
+              removeSpaces(currentTyped);
+              tallyScore(currentWord, removeSpaces(currentTyped));
+              alert("end of test");
+              inputRef.current.value = "";
             } else {
-              setCurrentTyped(inputRef.current.value);
+              tallyScore(currentWord, removeSpaces(currentTyped)); //remove spaces if input is too fast and factors space in when comparing strings
+              setCurrentWordIndex((currentWordIndex += 1));
+              setCurrentWord(wordsData[currentWordIndex]);
+              setCurrentSpelling(wordsSpellings[currentWordIndex]);
+              setCurrentCharIndex(0);
+              setCurrentTyped("");
+              inputRef.current.value = "";
+            }
+          }
+          //BACKSPACE
+          else if (e.key === "Backspace") {
+            //do nothing
+          }
+          //CHARACTER INPUT
+          else {
+            console.log("input key");
+            //dont let user input anymore if lengtrh of currentTyped is length of currentWord
+            if (removeSpaces(currentTyped).length === currentWordLength) {
+              e.preventDefault();
+            } else {
+              setCurrentTyped((currentTyped += e.key));
               setCurrentCharIndex((currentCharIndex += 1));
             }
+          }
+        }}
+        onKeyUp={(e) => {
+          if (e.key === "Backspace") {
+            console.log("backspace");
+            if(currentCharIndex !== 0) {
+              setCurrentCharIndex((currentCharIndex -= 1));
+            }
+            
+            setCurrentTyped(currentTyped.substring(0, currentTyped.length - 1));
           }
         }}
         ref={inputRef}
