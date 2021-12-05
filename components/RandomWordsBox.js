@@ -1,8 +1,13 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { FormControl } from "react-bootstrap";
+import Fade from "react-reveal/Fade";
+import ScoreBoard from "./ScoreBoard";
+import Timer from "../components/Timer";
 
 const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   console.log("RENDERED RANDOMWORDSBOX");
+  const [displayTimer, setDisplayTimer] = useState(false);
   const [testOver, setTestOver] = useState(false);
   const [wordsArray, setWordsArray] = useState(wordsData);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -75,198 +80,219 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   useEffect(() => {
     setCurrentWordLength(currentWord.length);
-    //check spelling only if user has inputed something
+
     if (currentTyped !== "") {
-      checkSpelling(currentWord, currentTyped, currentCharIndex);
+      checkSpelling(currentWord, currentTyped, currentCharIndex); //check spelling only if user has inputed something
     }
-  }, [currentTyped]);
+  }, [currentTyped]); //runs on every char input user types and inital mount
 
   return (
-    <div style={{ border: "1px solid red", padding: "25px" }}>
-      <span>
-        Correct: {score[0]} Incorrect {score[1]}
-      </span>
-      <br></br>
-      <br></br>
-      {wordsArray.map((x, index) => {
-        //WORD CURRENTLY SPELLING, BLUE HOVER OVER COLOR
-        if (currentWordIndex === index) {
-          return (
-            <div
-              style={{
-                display: "inline-block",
-                marginRight: "10px",
-                backgroundColor: "rgb(51, 162, 255)",
-                padding: "10px",
-                borderRadius: "10px",
-                color: "white",
-                fontSize: "25px",
-              }}
-              key={index}
-            >
-              {wordsSpellings[currentWordIndex].map((y, index2) => {
-                if (index2 < currentCharIndex) {
-                  console.log(
-                    "current char: " + wordsSpellings[currentWordIndex][index2]
-                  );
-                  console.log("current typed char: " + currentTyped[index2]);
-
-                  //correct char
-                  if (
-                    wordsSpellings[currentWordIndex][index2] ===
-                    currentTyped[index2]
-                  ) {
-                    return (
-                      <span key={index2} style={{ color: "black" }}>
-                        {y}
-                      </span>
-                    );
-                  }
-                  //wrong char
-                  else {
-                    return (
-                      <span key={index2} style={{ color: "red" }}>
-                        {currentTyped[index2]}
-                      </span>
-                    );
-                  }
-                } else {
-                  return (
-                    <span key={index2} style={{ color: "white" }}>
-                      {y}
-                    </span>
-                  );
-                }
-              })}
-            </div>
-          );
-        } else {
-          //WORD BEHIND CURRENT WORD SPELLING
-          if (index < currentWordIndex) {
-            //past spelling was correct
-            if (wordsArray[index] === wordsData[index]) {
-              return (
-                <div
-                  style={{
-                    display: "inline-block",
-                    marginRight: "10px",
-                    backgroundColor: "white",
-                    borderRadius: "10px",
-                    fontSize: "25px",
-                  }}
-                  key={index}
-                >
-                  <span>
-                    {x}
-                  </span>
-                </div>
-              );
-              //past spelling was wrong
-            } else {
-              return (
-                <div
-                  style={{
-                    display: "inline-block",
-                    marginRight: "10px",
-                    backgroundColor: "white",
-                    borderRadius: "10px",
-                    fontSize: "25px",
-                    color: "red",
-                  }}
-                  key={index}
-                >
-                  <span>
-                    <strike><i>{x}</i></strike>
-                    <br></br>
-                    <i>{wordsData[index]}</i>
-                  </span>
-                </div>
-              );
-            }
-
-            //WORD INFRONT OF CURRENT WORD SPELLING
-          } else {
+    <Fade>
+      <div style={{ border: "1px solid red", padding: "25px" }}>
+        <ScoreBoard scoreData={score} />
+        {displayTimer && <Timer showTimer={setDisplayTimer}/>}
+        <br></br>
+        <br></br>
+        {wordsArray.map((x, index) => {
+          //WORD CURRENTLY SPELLING, BLUE HOVER OVER COLOR
+          if (currentWordIndex === index) {
             return (
               <div
                 style={{
                   display: "inline-block",
                   marginRight: "10px",
-                  backgroundColor: "white",
-                  padding: "5px",
+                  backgroundColor: "rgb(51, 162, 255)",
+                  padding: "10px",
                   borderRadius: "10px",
+                  color: "white",
+                  fontSize: "25px",
                 }}
                 key={index}
               >
-                <span className="text-secondary">{x}</span>
+                {wordsSpellings[currentWordIndex].map((y, index2) => {
+                  if (index2 < currentCharIndex) {
+                    console.log(
+                      "current char: " +
+                        wordsSpellings[currentWordIndex][index2]
+                    );
+                    console.log("current typed char: " + currentTyped[index2]);
+
+                    //correct char
+                    if (
+                      wordsSpellings[currentWordIndex][index2] ===
+                      currentTyped[index2]
+                    ) {
+                      return (
+                        <span key={index2} style={{ color: "black" }}>
+                          {y}
+                        </span>
+                      );
+                    }
+                    //wrong char
+                    else {
+                      return (
+                        <span key={index2} style={{ color: "red" }}>
+                          {currentTyped[index2]}
+                        </span>
+                      );
+                    }
+                  } else {
+                    return (
+                      <span key={index2} style={{ color: "white" }}>
+                        {y}
+                      </span>
+                    );
+                  }
+                })}
               </div>
             );
+          } else {
+            //WORD BEHIND CURRENT WORD SPELLING
+            if (index < currentWordIndex) {
+              //past spelling was correct
+              if (wordsArray[index] === wordsData[index]) {
+                return (
+                  <div
+                    style={{
+                      display: "inline-block",
+                      marginRight: "10px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      fontSize: "25px",
+                      backgroundColor: "rgb(97, 217, 124, .3)",
+                      padding: "5px",
+                    }}
+                    key={index}
+                  >
+                    <span>{x}</span>
+                  </div>
+                );
+                //past spelling was wrong
+              } else {
+                return (
+                  <div
+                    style={{
+                      display: "inline-block",
+                      marginRight: "10px",
+                      backgroundColor: "white",
+                      borderRadius: "10px",
+                      fontSize: "25px",
+                      color: "red",
+                    }}
+                    key={index}
+                  >
+                    <span>
+                      {x !== "" && (
+                        <>
+                          <i>{x}</i>
+                          <br></br>
+                        </>
+                      )}
+                      <strike>
+                        <i>{wordsData[index]}</i>{" "}
+                      </strike>
+                    </span>
+                  </div>
+                );
+              }
+              //WORD INFRONT OF CURRENT WORD SPELLING
+            } else {
+              return (
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginRight: "10px",
+                    backgroundColor: "white",
+                    padding: "5px",
+                    borderRadius: "10px",
+                  }}
+                  key={index}
+                >
+                  <span className="text-secondary">{x}</span>
+                </div>
+              );
+            }
           }
-        }
-      })}
-      <br></br>
-      <br></br>
-      <input
-        type="text"
-        onKeyDown={(e) => {
-          //SPACE
-          if (e.key === " ") {
-            console.log("space");
-            //if space after last word, end test
-            if (wordsData.length === currentWordIndex + 1) {
-              if (testOver === false) {
-                tallyScore(currentWord, removeSpaces(currentTyped)); //tally score once more
-                setTestOver(true);
+        })}
+
+        <br></br>
+        <br></br>
+
+        <FormControl
+          placeholder="Start typing here"
+          aria-label="input"
+          style={{
+            border: "1px solid black",
+            maxWidth: "400px",
+            borderRight: "0px",
+            borderLeft: "0px",
+            borderTop: "0px",
+            borderRadius: "0px",
+          }}
+          onKeyDown={(e) => {
+            setDisplayTimer(true); //shows timer after user starts test
+            
+            //SPACE
+            if (e.key === " ") {
+              console.log("space");
+              //if space after last word, end test
+              if (wordsData.length === currentWordIndex + 1) {
+                if (testOver === false) {
+                  tallyScore(currentWord, removeSpaces(currentTyped)); //tally score once more
+                  setTestOver(true);
+                }
+
+                removeSpaces(currentTyped);
+                alert("end of test");
+                inputRef.current.value = "";
+              } else {
+                //need to update wordsData array to contain word how user spelled it after hitting space
+                var x = [...wordsArray];
+                x[currentWordIndex] = currentTyped;
+
+                setWordsArray(x);
+
+                tallyScore(currentWord, removeSpaces(currentTyped));
+                setCurrentWordIndex((currentWordIndex += 1));
+                setCurrentWord(wordsData[currentWordIndex]);
+                setCurrentSpelling(wordsSpellings[currentWordIndex]);
+                setCurrentCharIndex(0);
+                setCurrentTyped("");
+                inputRef.current.value = "";
+              }
+            }
+            //BACKSPACE
+            else if (e.key === "Backspace") {
+              //do nothing
+            }
+            //CHARACTER INPUT
+            else {
+              console.log("input key");
+              //dont let user input anymore if lengtrh of currentTyped is length of currentWord
+              if (removeSpaces(currentTyped).length === currentWordLength) {
+                e.preventDefault();
+              } else {
+                setCurrentTyped((currentTyped += e.key));
+                setCurrentCharIndex((currentCharIndex += 1));
+              }
+            }
+          }}
+          onKeyUp={(e) => {
+            if (e.key === "Backspace") {
+              console.log("backspace");
+              if (currentCharIndex !== 0) {
+                setCurrentCharIndex((currentCharIndex -= 1));
               }
 
-              removeSpaces(currentTyped);
-              alert("end of test");
-              inputRef.current.value = "";
-            } else {
-              //need to update wordsData array to contain word how user spelled it after hitting space
-              var x = [...wordsArray];
-              x[currentWordIndex] = currentTyped;
-              console.log("updated wordsData");
-              console.log(x);
-              setWordsArray(x);
-
-              tallyScore(currentWord, removeSpaces(currentTyped));
-              setCurrentWordIndex((currentWordIndex += 1));
-              setCurrentWord(wordsData[currentWordIndex]);
-              setCurrentSpelling(wordsSpellings[currentWordIndex]);
-              setCurrentCharIndex(0);
-              setCurrentTyped("");
-              inputRef.current.value = "";
+              setCurrentTyped(
+                currentTyped.substring(0, currentTyped.length - 1)
+              );
             }
-          }
-          //BACKSPACE
-          else if (e.key === "Backspace") {
-            //do nothing
-          }
-          //CHARACTER INPUT
-          else {
-            console.log("input key");
-            //dont let user input anymore if lengtrh of currentTyped is length of currentWord
-            if (removeSpaces(currentTyped).length === currentWordLength) {
-              e.preventDefault();
-            } else {
-              setCurrentTyped((currentTyped += e.key));
-              setCurrentCharIndex((currentCharIndex += 1));
-            }
-          }
-        }}
-        onKeyUp={(e) => {
-          if (e.key === "Backspace") {
-            console.log("backspace");
-            if (currentCharIndex !== 0) {
-              setCurrentCharIndex((currentCharIndex -= 1));
-            }
-
-            setCurrentTyped(currentTyped.substring(0, currentTyped.length - 1));
-          }
-        }}
-        ref={inputRef}
-      />
-    </div>
+          }}
+          ref={inputRef}
+        />
+      </div>
+    </Fade>
   );
 };
 

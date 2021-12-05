@@ -15,12 +15,10 @@ export default function Home({ words, splitWords }) {
 export async function getServerSideProps() {
   //all the words that user must spell
   const selectedWords = randomWords(100);
-  console.log(selectedWords);
   //array containing the spelling of all the generated words
   const wordsSplit = selectedWords.map((x) => {
     return x.split("");
   });
-  console.log(wordsSplit);
 
   return {
     props: {
