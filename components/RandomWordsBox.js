@@ -4,11 +4,14 @@ import { FormControl } from "react-bootstrap";
 import Fade from "react-reveal/Fade";
 import ScoreBoard from "./ScoreBoard";
 import Timer from "../components/Timer";
+import RestartTest from "./FinalScore";
 
 const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   console.log("RENDERED RANDOMWORDSBOX");
   const [displayTimer, setDisplayTimer] = useState(false);
   const [testOver, setTestOver] = useState(false);
+  const [finishedTest, setFinishedTest] = useState(false);
+
   const [wordsArray, setWordsArray] = useState(wordsData);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0); //(["c":0, "a":1, "r":2])
@@ -90,7 +93,23 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
     <Fade>
       <div style={{ border: "1px solid red", padding: "25px" }}>
         <ScoreBoard scoreData={score} />
-        {displayTimer && <Timer showTimer={setDisplayTimer}/>}
+
+        {finishedTest && (
+          <RestartTest
+            funcs={[
+              setWordsArray,
+              setCurrentWordIndex,
+              setCurrentCharIndex,
+              setCurrentWord,
+              setCurrentWordLength,
+              setCurrentSpelling,
+              setCurrentTyped,
+              setScore,
+              setFinishedTest,
+              inputRef
+            ]}
+          />
+        )}
         <br></br>
         <br></br>
         {wordsArray.map((x, index) => {
@@ -230,50 +249,55 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
             borderRadius: "0px",
           }}
           onKeyDown={(e) => {
-            setDisplayTimer(true); //shows timer after user starts test
-            
-            //SPACE
-            if (e.key === " ") {
-              console.log("space");
-              //if space after last word, end test
-              if (wordsData.length === currentWordIndex + 1) {
-                if (testOver === false) {
-                  tallyScore(currentWord, removeSpaces(currentTyped)); //tally score once more
-                  setTestOver(true);
+            //wont allow you to type after test is finished
+            if (finishedTest === true) {
+              e.preventDefault();
+            } else {
+              setDisplayTimer(true); //shows timer after user starts test
+
+              //SPACE
+              if (e.key === " ") {
+                console.log("space");
+                //if space after last word, end test
+                if (wordsData.length === currentWordIndex + 1) {
+                  if (testOver === false) {
+                    tallyScore(currentWord, removeSpaces(currentTyped)); //tally score once more
+                    setTestOver(true);
+                  }
+
+                  removeSpaces(currentTyped);
+                  alert("end of test");
+                  inputRef.current.value = "";
+                } else {
+                  //need to update wordsData array to contain word how user spelled it after hitting space
+                  var x = [...wordsArray];
+                  x[currentWordIndex] = currentTyped;
+
+                  setWordsArray(x);
+
+                  tallyScore(currentWord, removeSpaces(currentTyped));
+                  setCurrentWordIndex((currentWordIndex += 1));
+                  setCurrentWord(wordsData[currentWordIndex]);
+                  setCurrentSpelling(wordsSpellings[currentWordIndex]);
+                  setCurrentCharIndex(0);
+                  setCurrentTyped("");
+                  inputRef.current.value = "";
                 }
-
-                removeSpaces(currentTyped);
-                alert("end of test");
-                inputRef.current.value = "";
-              } else {
-                //need to update wordsData array to contain word how user spelled it after hitting space
-                var x = [...wordsArray];
-                x[currentWordIndex] = currentTyped;
-
-                setWordsArray(x);
-
-                tallyScore(currentWord, removeSpaces(currentTyped));
-                setCurrentWordIndex((currentWordIndex += 1));
-                setCurrentWord(wordsData[currentWordIndex]);
-                setCurrentSpelling(wordsSpellings[currentWordIndex]);
-                setCurrentCharIndex(0);
-                setCurrentTyped("");
-                inputRef.current.value = "";
               }
-            }
-            //BACKSPACE
-            else if (e.key === "Backspace") {
-              //do nothing
-            }
-            //CHARACTER INPUT
-            else {
-              console.log("input key");
-              //dont let user input anymore if lengtrh of currentTyped is length of currentWord
-              if (removeSpaces(currentTyped).length === currentWordLength) {
-                e.preventDefault();
-              } else {
-                setCurrentTyped((currentTyped += e.key));
-                setCurrentCharIndex((currentCharIndex += 1));
+              //BACKSPACE
+              else if (e.key === "Backspace") {
+                //do nothing
+              }
+              //CHARACTER INPUT
+              else {
+                console.log("input key");
+                //dont let user input anymore if lengtrh of currentTyped is length of currentWord
+                if (removeSpaces(currentTyped).length === currentWordLength) {
+                  e.preventDefault();
+                } else {
+                  setCurrentTyped((currentTyped += e.key));
+                  setCurrentCharIndex((currentCharIndex += 1));
+                }
               }
             }
           }}
@@ -291,6 +315,28 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           }}
           ref={inputRef}
         />
+        {displayTimer && finishedTest === false && (
+          <Timer showTimer={setDisplayTimer} finished={setFinishedTest} />
+        )}
+        {displayTimer === false && (
+          <>
+            <br></br>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-stopwatch"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+                <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+              </svg>{" "}
+              60
+            </span>
+          </>
+        )}
       </div>
     </Fade>
   );
