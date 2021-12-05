@@ -3,7 +3,8 @@ import { useState, useEffect, useRef } from "react";
 
 const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   console.log("RENDERED RANDOMWORDSBOX");
-
+  const [testOver, setTestOver] = useState(false);
+  const [wordsArray, setWordsArray] = useState(wordsData);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0); //(["c":0, "a":1, "r":2])
   const [currentWord, setCurrentWord] = useState(wordsData[currentWordIndex]); //which word user is on (["car":0, "cat":1, "can":2])
@@ -60,6 +61,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
     }
   }
 
+  //remove spaces if input is too fast and factors space in when comparing strings
   function removeSpaces(word) {
     const x = word.split(" ");
 
@@ -86,7 +88,8 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       </span>
       <br></br>
       <br></br>
-      {wordsData.map((x, index) => {
+      {wordsArray.map((x, index) => {
+        //WORD CURRENTLY SPELLING, BLUE HOVER OVER COLOR
         if (currentWordIndex === index) {
           return (
             <div
@@ -114,7 +117,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                     currentTyped[index2]
                   ) {
                     return (
-                      <span key={index2} style={{ color: "green" }}>
+                      <span key={index2} style={{ color: "black" }}>
                         {y}
                       </span>
                     );
@@ -129,7 +132,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                   }
                 } else {
                   return (
-                    <span key={index2} style={{ color: "black" }}>
+                    <span key={index2} style={{ color: "white" }}>
                       {y}
                     </span>
                   );
@@ -138,21 +141,50 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
             </div>
           );
         } else {
+          //WORD BEHIND CURRENT WORD SPELLING
           if (index < currentWordIndex) {
-            return (
-              <div
-                style={{
-                  display: "inline-block",
-                  marginRight: "10px",
-                  backgroundColor: "white",
-                  borderRadius: "10px",
-                  fontSize: "25px",
-                }}
-                key={index}
-              >
-                <span>{x}</span>
-              </div>
-            );
+            //past spelling was correct
+            if (wordsArray[index] === wordsData[index]) {
+              return (
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginRight: "10px",
+                    backgroundColor: "white",
+                    borderRadius: "10px",
+                    fontSize: "25px",
+                  }}
+                  key={index}
+                >
+                  <span>
+                    {x}
+                  </span>
+                </div>
+              );
+              //past spelling was wrong
+            } else {
+              return (
+                <div
+                  style={{
+                    display: "inline-block",
+                    marginRight: "10px",
+                    backgroundColor: "white",
+                    borderRadius: "10px",
+                    fontSize: "25px",
+                    color: "red",
+                  }}
+                  key={index}
+                >
+                  <span>
+                    <strike><i>{x}</i></strike>
+                    <br></br>
+                    <i>{wordsData[index]}</i>
+                  </span>
+                </div>
+              );
+            }
+
+            //WORD INFRONT OF CURRENT WORD SPELLING
           } else {
             return (
               <div
@@ -181,12 +213,23 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
             console.log("space");
             //if space after last word, end test
             if (wordsData.length === currentWordIndex + 1) {
+              if (testOver === false) {
+                tallyScore(currentWord, removeSpaces(currentTyped)); //tally score once more
+                setTestOver(true);
+              }
+
               removeSpaces(currentTyped);
-              tallyScore(currentWord, removeSpaces(currentTyped));
               alert("end of test");
               inputRef.current.value = "";
             } else {
-              tallyScore(currentWord, removeSpaces(currentTyped)); //remove spaces if input is too fast and factors space in when comparing strings
+              //need to update wordsData array to contain word how user spelled it after hitting space
+              var x = [...wordsArray];
+              x[currentWordIndex] = currentTyped;
+              console.log("updated wordsData");
+              console.log(x);
+              setWordsArray(x);
+
+              tallyScore(currentWord, removeSpaces(currentTyped));
               setCurrentWordIndex((currentWordIndex += 1));
               setCurrentWord(wordsData[currentWordIndex]);
               setCurrentSpelling(wordsSpellings[currentWordIndex]);
