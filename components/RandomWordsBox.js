@@ -76,7 +76,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
     //check spelling only if user has inputed something
     if (currentTyped !== "") {
       checkSpelling(currentWord, currentTyped, currentCharIndex);
-      
     }
   }, [currentTyped]);
 
@@ -88,29 +87,89 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       <br></br>
       <br></br>
       {wordsData.map((x, index) => {
-
-        if(currentWordIndex === index) {
-return (
-          <div
-            style={{ display: "inline-block", marginRight: "10px", backgroundColor: 'yellow', padding: '10px', borderRadius: '10px'}}
-            key={index}
-          >
-            <span>{x}</span>
-          </div>
-        );
-        } else {
+        if (currentWordIndex === index) {
           return (
             <div
-              style={{ display: "inline-block", marginRight: "10px", backgroundColor: 'white', padding: '10px', borderRadius: '10px'}}
+              style={{
+                display: "inline-block",
+                marginRight: "10px",
+                backgroundColor: "rgb(51, 162, 255)",
+                padding: "10px",
+                borderRadius: "10px",
+                color: "white",
+                fontSize: "25px",
+              }}
               key={index}
             >
-              <span>{x}</span>
+              {wordsSpellings[currentWordIndex].map((y, index2) => {
+                if (index2 < currentCharIndex) {
+                  console.log(
+                    "current char: " + wordsSpellings[currentWordIndex][index2]
+                  );
+                  console.log("current typed char: " + currentTyped[index2]);
+
+                  //correct char
+                  if (
+                    wordsSpellings[currentWordIndex][index2] ===
+                    currentTyped[index2]
+                  ) {
+                    return (
+                      <span key={index2} style={{ color: "green" }}>
+                        {y}
+                      </span>
+                    );
+                  }
+                  //wrong char
+                  else {
+                    return (
+                      <span key={index2} style={{ color: "red" }}>
+                        {currentTyped[index2]}
+                      </span>
+                    );
+                  }
+                } else {
+                  return (
+                    <span key={index2} style={{ color: "black" }}>
+                      {y}
+                    </span>
+                  );
+                }
+              })}
             </div>
           );
+        } else {
+          if (index < currentWordIndex) {
+            return (
+              <div
+                style={{
+                  display: "inline-block",
+                  marginRight: "10px",
+                  backgroundColor: "white",
+                  borderRadius: "10px",
+                  fontSize: "25px",
+                }}
+                key={index}
+              >
+                <span>{x}</span>
+              </div>
+            );
+          } else {
+            return (
+              <div
+                style={{
+                  display: "inline-block",
+                  marginRight: "10px",
+                  backgroundColor: "white",
+                  padding: "5px",
+                  borderRadius: "10px",
+                }}
+                key={index}
+              >
+                <span className="text-secondary">{x}</span>
+              </div>
+            );
+          }
         }
-
-
-        
       })}
       <br></br>
       <br></br>
@@ -155,10 +214,10 @@ return (
         onKeyUp={(e) => {
           if (e.key === "Backspace") {
             console.log("backspace");
-            if(currentCharIndex !== 0) {
+            if (currentCharIndex !== 0) {
               setCurrentCharIndex((currentCharIndex -= 1));
             }
-            
+
             setCurrentTyped(currentTyped.substring(0, currentTyped.length - 1));
           }
         }}

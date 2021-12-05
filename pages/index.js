@@ -7,6 +7,7 @@ export default function Home({ words, splitWords }) {
     <Container>
       <h1>typing test</h1>
       <RandomWordsBox wordsData={words} wordsSpellings={splitWords} />
+      <p>Free online speed typing test. Type as many words as possible before the timer runs out.</p>
     </Container>
   );
 }
