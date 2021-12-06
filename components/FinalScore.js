@@ -9,7 +9,7 @@ console.log("incorrect " + finalScores[1]);
 console.log(finalScores[0]/(finalScores[0]+finalScores[1]))
 
   return (
-    <div>
+    <div style={{marginTop: '25px'}}>
       <Button variant="danger" onClick={() => {window.location.reload()}}>Restart</Button>
       <p>
         Congrats, you scored a{" "}

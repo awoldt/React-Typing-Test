@@ -27,29 +27,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   const inputRef = useRef();
 
-  function checkSpelling(word, spelling, charIndex) {
-    //CORRECT
-    if (currentSpelling[charIndex - 1] === currentTyped[charIndex - 1]) {
-      console.log("Correct spelling");
-      console.log("word to spell: " + word);
-      console.log(spelling);
-      console.log("------");
-      console.log(
-        currentSpelling[charIndex - 1] + " to " + currentTyped[charIndex - 1]
-      );
-    }
-    //WRONG
-    else {
-      console.log("Wrong spelling");
-      console.log("word to spell: " + word);
-      console.log(spelling);
-      console.log("------");
-      console.log(
-        currentSpelling[charIndex - 1] + " to " + currentTyped[charIndex]
-      );
-    }
-  }
-
   function tallyScore(word, spelling) {
     //CORRECT
     if (word === spelling.toLowerCase()) {
@@ -83,19 +60,10 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   useEffect(() => {
     setCurrentWordLength(currentWord.length);
-
-    if (currentTyped !== "") {
-      checkSpelling(currentWord, currentTyped, currentCharIndex); //check spelling only if user has inputed something
-    }
   }, [currentTyped]); //runs on every char input user types and inital mount
 
   return (
     <div style={{ border: "1px solid red", padding: "25px" }}>
-      
-
-      {finishedTest && <RestartTest finalScores={score} />}
-      <br></br>
-      <br></br>
       {wordsArray.map((x, index) => {
         //WORD CURRENTLY SPELLING, BLUE HOVER OVER COLOR
         if (currentWordIndex === index) {
@@ -251,7 +219,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
                 removeSpaces(currentTyped);
                 setDisplayTimer(false);
-                setFinishedTest(true)
+                setFinishedTest(true);
                 alert("end of test");
                 inputRef.current.value = "";
               } else {
@@ -321,8 +289,9 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           </span>
         </>
       )}
-      
+
       <ScoreBoard scoreData={score} />
+      {finishedTest && <RestartTest finalScores={score} />}
     </div>
   );
 };
