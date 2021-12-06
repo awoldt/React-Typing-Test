@@ -91,7 +91,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   return (
     <div style={{ border: "1px solid red", padding: "25px" }}>
-      <ScoreBoard scoreData={score} />
+      
 
       {finishedTest && <RestartTest finalScores={score} />}
       <br></br>
@@ -321,6 +321,8 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           </span>
         </>
       )}
+      
+      <ScoreBoard scoreData={score} />
     </div>
   );
 };
