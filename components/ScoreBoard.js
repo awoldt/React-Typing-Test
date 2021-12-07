@@ -1,15 +1,15 @@
 import React from "react";
 
-const ScoreBoard = ({ scoreData, wordSpellings, words }) => {
+const ScoreBoard = ({ scoreData, spellings, wordsArray }) => {
   return (
     <div style={{ marginTop: "15px" }}>
       <span>Correct: {scoreData[0]}</span>
       <br></br>
-      {wordSpellings.map((x, index) => {
+      {spellings.map((x, index) => {
         if (x == 1) {
           return (
             <>
-              <span>{words[index]}</span>
+              <span>{wordsArray[index]}</span>
               <br></br>
             </>
           );
@@ -18,11 +18,11 @@ const ScoreBoard = ({ scoreData, wordSpellings, words }) => {
 
       <span style={{ marginLeft: "50px" }}>Wrong: {scoreData[1]}</span>
       <br></br>
-      {wordSpellings.map((x, index) => {
+      {spellings.map((x, index) => {
         if (x == 0) {
           return (
             <>
-              <span>{words[index]}</span>
+              <span>{wordsArray[index]}</span>
               <br></br>
             </>
           );

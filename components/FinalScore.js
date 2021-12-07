@@ -9,9 +9,8 @@ const FinalScore = ({ finalScores, wordSpellings, words }) => {
 
   return (
     <div
-      style={{ marginTop: "25px" }}
+      style={{ marginTop: "25px", padding: "10px" }}
       className="text-center bg-warning"
-      style={{ padding: "10px" }}
     >
       <Button
         variant="danger"
@@ -30,8 +29,8 @@ const FinalScore = ({ finalScores, wordSpellings, words }) => {
       </p>
       <ScoreBoard
         scoreData={finalScores}
-        wordSpellings={wordSpellings}
-        words={words}
+        spellings={wordSpellings}
+        wordsArray={words}
       />
     </div>
   );
