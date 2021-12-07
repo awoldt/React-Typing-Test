@@ -9,8 +9,8 @@ const FinalScore = ({ finalScores, wordSpellings, words }) => {
 
   return (
     <div
-      style={{ marginTop: "25px", padding: "10px" }}
-      className="text-center bg-warning"
+      style={{ marginTop: "25px", padding: "10px", backgroundColor: '#e6e6e6'}}
+      className="text-center"
     >
       <Button
         variant="danger"
@@ -20,7 +20,7 @@ const FinalScore = ({ finalScores, wordSpellings, words }) => {
       >
         Restart
       </Button>
-      <p>
+      <p style={{fontSize: '25px', marginTop: '25px'}}>
         Out of the {finalScores[0] + finalScores[1]} words you typed, you got{" "}
         {((finalScores[0] / (finalScores[0] + finalScores[1])) * 100).toFixed(
           0

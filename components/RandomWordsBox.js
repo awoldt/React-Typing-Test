@@ -1,11 +1,11 @@
 import React from "react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FormControl } from "react-bootstrap";
 import Timer from "../components/Timer";
 import RestartTest from "./FinalScore";
+import SocialButtons from "./SocialButtons";
 
 const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
-  console.log("RENDERED RANDOMWORDSBOX");
   const [displayTimer, setDisplayTimer] = useState(false);
   const [testOver, setTestOver] = useState(false);
   const [finishedTest, setFinishedTest] = useState(false);
@@ -21,8 +21,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [currentTyped, setCurrentTyped] = useState(""); //what the user has currently typed (UPDATES ON USER INPUT WITH USEEFFECT)
   const [score, setScore] = useState([0, 0]);
   const [scoreWords, setScoreWords] = useState([]); //stores a copy of how user spelled
-
-  const [multipleAttemps, setMultipleAttemps] = useState(false); //any attempt after the first will fetch new words
 
   const inputRef = useRef();
 
@@ -68,11 +66,18 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
     setCurrentWordLength(currentWord.length);
   }, [currentTyped]); //runs on every char input user types and inital mount
 
-  if (multipleAttemps === false) {
-  }
-
   return (
-    <div style={{ border: "1px solid red", padding: "25px" }}>
+    <div
+      style={{
+        border: "5px solid black",
+        padding: "25px",
+        borderRadius: "10px",
+        backgroundColor: "white",
+        marginRight: "50px",
+        marginLeft: "50px",
+        marginBottom: "50px",
+      }}
+    >
       {wordsArray.map((x, index) => {
         //WORD CURRENTLY SPELLING, BLUE HOVER OVER COLOR
         if (currentWordIndex === index) {
@@ -81,7 +86,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
               style={{
                 display: "inline-block",
                 marginRight: "10px",
-                backgroundColor: "rgb(51, 162, 255)",
+                backgroundColor: "#e6e6e6",
                 padding: "10px",
                 borderRadius: "10px",
                 color: "white",
@@ -118,7 +123,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                   }
                 } else {
                   return (
-                    <span key={index2} style={{ color: "white" }}>
+                    <span key={index2} style={{ color: "#737373" }}>
                       {y}
                     </span>
                   );
@@ -195,9 +200,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
         }
       })}
 
-      <br></br>
-      <br></br>
-
       <FormControl
         placeholder="Start typing here"
         aria-label="input"
@@ -208,6 +210,8 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           borderLeft: "0px",
           borderTop: "0px",
           borderRadius: "0px",
+          marginTop: "45px",
+          marginBottom: "15px",
         }}
         onKeyDown={(e) => {
           //wont allow you to type after test is finished
@@ -225,12 +229,10 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                   tallyScore(currentWord, removeSpaces(currentTyped)); //tally score once more
                   setTestOver(true);
                 }
-
+                inputRef.current.remove();
                 removeSpaces(currentTyped);
                 setDisplayTimer(false);
                 setFinishedTest(true);
-                alert("end of test");
-                inputRef.current.value = "";
               } else {
                 //need to update wordsData array to contain word how user spelled it after hitting space
                 var x = [...wordsArray];
@@ -284,43 +286,38 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
         />
       )}
       {displayTimer === false && finishedTest == false && (
-        <>
-          <br></br>
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-stopwatch"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
-              <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
-            </svg>{" "}
-            60
-          </span>
-        </>
+        <span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-stopwatch"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+            <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+          </svg>{" "}
+          60
+        </span>
       )}
 
       {displayTimer === false && finishedTest && (
-        <>
+        <span>
           <br></br>
-          <span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-stopwatch"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
-              <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
-            </svg>{" "}
-            <i>Time limit has expired</i>
-          </span>
-        </>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-stopwatch"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+            <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+          </svg>{" "}
+          <i>Time limit has expired</i>
+        </span>
       )}
 
       {finishedTest && (
@@ -330,6 +327,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           words={wordsData}
         />
       )}
+      <SocialButtons />
     </div>
   );
 };

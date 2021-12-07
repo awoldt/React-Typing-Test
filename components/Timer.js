@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const Timer = ({ showTimer, finished, input}) => {
+const Timer = ({ showTimer, finished, input }) => {
   const [count, setCount] = useState(5);
 
   useEffect(() => {
     const timer = setInterval(() => {
       if (count === 0) {
-        input.current.style.visibility = 'hidden';
+        input.current.remove();
         clearInterval(timer);
         showTimer(false);
         finished(true);
@@ -22,8 +22,6 @@ const Timer = ({ showTimer, finished, input}) => {
   }, []);
 
   return (
-    <>
-    <br></br>
     <span>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +36,6 @@ const Timer = ({ showTimer, finished, input}) => {
       </svg>{" "}
       {count}
     </span>
-    </>
   );
 };
 
