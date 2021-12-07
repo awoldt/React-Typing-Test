@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { FormControl } from "react-bootstrap";
-import ScoreBoard from "./ScoreBoard";
 import Timer from "../components/Timer";
 import RestartTest from "./FinalScore";
 
@@ -19,17 +18,21 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [currentWordLength, setCurrentWordLength] = useState(
     currentWord.length
   );
-  const [currentSpelling, setCurrentSpelling] = useState(
-    wordSpellingsArray[currentWordIndex]
-  );
   const [currentTyped, setCurrentTyped] = useState(""); //what the user has currently typed (UPDATES ON USER INPUT WITH USEEFFECT)
   const [score, setScore] = useState([0, 0]);
+  const [scoreWords, setScoreWords] = useState([]); //stores a copy of how user spelled
+
+  const [multipleAttemps, setMultipleAttemps] = useState(false); //any attempt after the first will fetch new words
 
   const inputRef = useRef();
 
   function tallyScore(word, spelling) {
     //CORRECT
     if (word === spelling.toLowerCase()) {
+      var w = [...scoreWords];
+      w.push(1);
+      setScoreWords(w);
+
       console.log("POINT");
       console.log(word + " to " + spelling);
       var x = [...score];
@@ -38,6 +41,9 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
     }
     //WRONG
     else {
+      var w = [...scoreWords];
+      w.push(0);
+      setScoreWords(w);
       console.log("NO POINT");
       console.log(word + " to " + spelling);
       var x = [...score];
@@ -61,6 +67,9 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   useEffect(() => {
     setCurrentWordLength(currentWord.length);
   }, [currentTyped]); //runs on every char input user types and inital mount
+
+  if (multipleAttemps === false) {
+  }
 
   return (
     <div style={{ border: "1px solid red", padding: "25px" }}>
@@ -230,9 +239,9 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                 setWordsArray(x);
 
                 tallyScore(currentWord, removeSpaces(currentTyped));
+
                 setCurrentWordIndex((currentWordIndex += 1));
                 setCurrentWord(wordsData[currentWordIndex]);
-                setCurrentSpelling(wordSpellingsArray[currentWordIndex]);
                 setCurrentCharIndex(0);
                 setCurrentTyped("");
                 inputRef.current.value = "";
@@ -268,9 +277,13 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
         ref={inputRef}
       />
       {displayTimer && finishedTest === false && (
-        <Timer showTimer={setDisplayTimer} finished={setFinishedTest} />
+        <Timer
+          showTimer={setDisplayTimer}
+          finished={setFinishedTest}
+          input={inputRef}
+        />
       )}
-      {displayTimer === false && (
+      {displayTimer === false && finishedTest == false && (
         <>
           <br></br>
           <span>
@@ -290,8 +303,33 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
         </>
       )}
 
-      <ScoreBoard scoreData={score} />
-      {finishedTest && <RestartTest finalScores={score} />}
+      {displayTimer === false && finishedTest && (
+        <>
+          <br></br>
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-stopwatch"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+              <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+            </svg>{" "}
+            <i>Time limit has expired</i>
+          </span>
+        </>
+      )}
+
+      {finishedTest && (
+        <RestartTest
+          finalScores={score}
+          wordSpellings={scoreWords}
+          words={wordsData}
+        />
+      )}
     </div>
   );
 };

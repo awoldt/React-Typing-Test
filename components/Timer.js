@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const Timer = ({ showTimer, finished }) => {
-  const [count, setCount] = useState(60);
+const Timer = ({ showTimer, finished, input}) => {
+  const [count, setCount] = useState(5);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("heyyyy");
       if (count === 0) {
+        input.current.style.visibility = 'hidden';
         clearInterval(timer);
         showTimer(false);
         finished(true);
