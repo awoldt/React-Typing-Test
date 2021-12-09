@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { FormControl, Row, Col } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import Timer from "./Timer";
@@ -10,17 +10,21 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
 
+  const [charsTyped, setCharsTyped] = useState(0);
+
   const [currentTyped, setCurrentTyped] = useState("");
 
   const [testOver, setTestOver] = useState(false);
   const [score, setScore] = useState([]); //array containing 0s and 1s for each word spelled
+  const [correct, setCorrect] = useState(0); //tally of all correctly spelled words
+  const [incorrect, setIncorrect] = useState(0); //tally of all incorrecly spelled words
   const [displayTimer, setDisplayTimer] = useState(false);
 
   const inuptRef = useRef();
 
   return (
     <Container>
-      <div className="text-center" style={{ fontSize: "50px" }}>
+      <div className="text-center">
         {testOver === false &&
           wordsSpellings[currentWordIndex].map((x, index) => {
             //behind current word to spell
@@ -31,7 +35,10 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
                 wordsSpellings[currentWordIndex][index]
               ) {
                 return (
-                  <span key={index} style={{ color: "green" }}>
+                  <span
+                    key={index}
+                    style={{ color: "green", fontSize: "50px" }}
+                  >
                     {x}
                   </span>
                 );
@@ -39,7 +46,7 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               //spelled past char incorrectly
               else {
                 return (
-                  <span key={index} style={{ color: "red" }}>
+                  <span key={index} style={{ color: "red", fontSize: "50px" }}>
                     {x}
                   </span>
                 );
@@ -50,7 +57,11 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               return (
                 <span
                   key={index}
-                  style={{ color: "grey", textDecoration: "underline" }}
+                  style={{
+                    color: "grey",
+                    textDecoration: "underline",
+                    fontSize: "50px",
+                  }}
                 >
                   {x}
                 </span>
@@ -58,18 +69,33 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             }
             //chars infront of char currently spelling
             else if (index > currentCharIndex) {
-              return <span key={index}>{x}</span>;
+              return (
+                <span key={index} style={{ fontSize: "50px" }}>
+                  {x}
+                </span>
+              );
             }
           })}
 
         {testOver && (
           <Row>
-            <span style={{ fontSize: "20px" }}>
+            <span style={{ fontSize: "20px", marginTop: "25px" }}>
               Out of the {score.length} words you typed, you got{" "}
-              {score[1] / (score[0] + score[1])}% correct
+              {(correct / score.length).toFixed(2) * 100}% correct
             </span>
+            <code style={{ marginBottom: "20px" }}>
+              Your WPM score is {charsTyped / 5}
+            </code>
             <Col>
-              <span style={{ fontSize: "20px" }}>Correct</span>
+              <span
+                style={{
+                  fontSize: "20px",
+                  textDecoration: "underline",
+                  color: "green",
+                }}
+              >
+                Correct
+              </span>
               <br></br>
               {score.map((x, index) => {
                 if (x === 1) {
@@ -85,7 +111,15 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               })}
             </Col>
             <Col>
-              <span style={{ fontSize: "20px" }}>Incorrect</span>
+              <span
+                style={{
+                  fontSize: "20px",
+                  textDecoration: "underline",
+                  color: "red",
+                }}
+              >
+                Incorrect
+              </span>
               <br></br>
               {score.map((x, index) => {
                 if (x === 0) {
@@ -124,10 +158,12 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
                 var x = [...score];
                 x.push(1);
                 setScore(x);
+                setCorrect((correct += 1));
               } else {
                 var x = [...score];
                 x.push(0);
                 setScore(x);
+                setIncorrect((incorrect += 1));
               }
               setCurrentTyped("");
               setCurrentCharIndex(0);
@@ -152,6 +188,7 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               ) {
                 setCurrentTyped((currentTyped += e.key));
                 setCurrentCharIndex((currentCharIndex += 1));
+                setCharsTyped((charsTyped += 1));
               } else {
                 e.preventDefault();
               }
@@ -193,6 +230,24 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
             </svg>{" "}
             60
+          </span>
+        )}
+
+        {displayTimer === false && testOver && (
+          <span>
+            <br></br>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-stopwatch"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+              <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+            </svg>{" "}
+            <i>Time limit has expired</i>
           </span>
         )}
       </Row>
