@@ -3,6 +3,15 @@ import { useState, useRef } from "react";
 import { FormControl, Row, Col } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 import Timer from "./Timer";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  RedditShareButton,
+  RedditIcon,
+  FacebookMessengerIcon,
+} from "react-share";
 
 const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [wordsArray, setWordsArray] = useState(wordsData);
@@ -253,6 +262,22 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
       </Row>
 
       <hr style={{ marginTop: "50px" }}></hr>
+
+      <p className="text-center">Challenge your friends</p>
+      <div className="text-center" style={{marginBottom: '25px'}}>
+        <FacebookShareButton url={"https://typesnap.com"} style={{marginRight: "8px"}}> 
+          <FacebookIcon size={40} />
+        </FacebookShareButton>
+        <TwitterShareButton
+          url={"https://typesnap.com"}
+          style={{ marginRight: "8px" }}
+        >
+          <TwitterIcon size={40} />
+        </TwitterShareButton>
+        <RedditShareButton url={"https://typesnap.com"}>
+          <RedditIcon size={40} />
+        </RedditShareButton>
+      </div>
 
       <div>
         <p className="'text-center">

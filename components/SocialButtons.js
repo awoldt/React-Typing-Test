@@ -5,13 +5,13 @@ const SocialButtons = () => {
     return (
         <div className='text-center mt-3'>
             <span style={{marginRight: '20px'}}>Challenge your friends</span>
-            <FacebookShareButton url={'www.google.com'} style={{marginRight: '3px'}}>
+            <FacebookShareButton url={'https://typesnap.com'} style={{marginRight: '3px'}}>
                 <FacebookIcon size={32}/>
             </FacebookShareButton>
-            <TwitterShareButton url={'www.google.com'} style={{marginRight: '3px'}}>
+            <TwitterShareButton url={'https://typesnap.com'} style={{marginRight: '3px'}}>
                 <TwitterIcon size={32}/>
             </TwitterShareButton>
-            <RedditShareButton url={'www.google.com'} >
+            <RedditShareButton url={'https://typesnap.com'} >
                 <RedditIcon size={32}/>
             </RedditShareButton>
         </div>

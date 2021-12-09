@@ -7,12 +7,43 @@ import isMobile from "ismobilejs";
 
 export default function Home({ words, splitWords, mobile }) {
   if (mobile === true) {
-    return <MobileRandomWordsBox wordsData={words} wordsSpellings={splitWords}/>;
+    return (
+      <>
+        <Head>
+          <title>Typesnap | Free Online Typing Test</title>
+          <meta
+            name="description"
+            content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words. Improve your typing and challenge your friends. Optimized for mobile devices."
+          ></meta>
+          <meta property="og:title" content="How fast can you type?" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content="https://typesnap.com"
+          />
+          <meta property="og:image" content="/favicon.ico" />
+          <link rel="canonical" href="https://typesnap.com" />
+        </Head>
+        <MobileRandomWordsBox wordsData={words} wordsSpellings={splitWords} />
+      </>
+    );
   } else {
     return (
       <>
         <Head>
-          <title>typing test | Free Online Typing Test</title>
+          <title>Typesnap | Free Online Typing Test</title>
+          <meta
+            name="description"
+            content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words. Improve your typing and challenge your friends."
+          ></meta>
+          <meta property="og:title" content="How fast can you type?" />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:url"
+            content="https://typesnap.com"
+          />
+          <meta property="og:image" content="/favicon.ico" />
+          <link rel="canonical" href="https://typesnap.com" />
         </Head>
         <Container
           style={{ backgroundColor: "rgb(51, 162, 255)", padding: "0px" }}

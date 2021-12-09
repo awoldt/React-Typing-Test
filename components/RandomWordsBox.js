@@ -21,6 +21,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [currentTyped, setCurrentTyped] = useState(""); //what the user has currently typed (UPDATES ON USER INPUT WITH USEEFFECT)
   const [score, setScore] = useState([0, 0]);
   const [scoreWords, setScoreWords] = useState([]); //stores a copy of how user spelled
+  const [charsTyped, setCharsTyped] = useState(0);
 
   const inputRef = useRef();
 
@@ -262,6 +263,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
               } else {
                 setCurrentTyped((currentTyped += e.key));
                 setCurrentCharIndex((currentCharIndex += 1));
+                setCharsTyped((charsTyped += 1));
               }
             }
           }
@@ -321,11 +323,17 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       )}
 
       {finishedTest && (
-        <RestartTest
-          finalScores={score}
-          wordSpellings={scoreWords}
-          words={wordsData}
-        />
+        <>
+          <br></br>
+          <br></br>
+          <code>Your WPM score is {charsTyped / 5}</code>
+
+          <RestartTest
+            finalScores={score}
+            wordSpellings={scoreWords}
+            words={wordsData}
+          />
+        </>
       )}
       <SocialButtons />
     </div>

@@ -7,7 +7,7 @@ const ScoreBoard = ({ scoreData, spellings, wordsArray }) => {
       <Row style={{ paddingLeft: "50px", paddingRight: "50px" }}>
         <Col>
           <span>
-            <b>Correct: {scoreData[0]}</b>
+            <b style={{color: 'green'}}>Correct: {scoreData[0]}</b>
           </span>
           <br></br>
           {spellings.map((x, index) => {
@@ -23,7 +23,7 @@ const ScoreBoard = ({ scoreData, spellings, wordsArray }) => {
         </Col>
         <Col>
           <span>
-            <b>Wrong: {scoreData[1]}</b>
+            <b style={{color: 'red'}}>Wrong: {scoreData[1]}</b>
           </span>
           <br></br>
           {spellings.map((x, index) => {
