@@ -1,18 +1,20 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { FormControl, Row} from "react-bootstrap";
+import { FormControl, Row, Col } from "react-bootstrap";
 import { Container } from "react-bootstrap";
+import Timer from "./Timer";
 
 const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [wordsArray, setWordsArray] = useState(wordsData);
   const [wordSpellingsArray, setWordSpellingsArray] = useState(wordsSpellings);
-  const [currentWord, setCurrentWord] = useState(wordsData[0]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentCharIndex, setCurrentCharIndex] = useState(0);
 
   const [currentTyped, setCurrentTyped] = useState("");
 
   const [testOver, setTestOver] = useState(false);
+  const [score, setScore] = useState([]); //array containing 0s and 1s for each word spelled
+  const [displayTimer, setDisplayTimer] = useState(false);
 
   const inuptRef = useRef();
 
@@ -46,7 +48,10 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             //char currently spelling
             else if (index === currentCharIndex) {
               return (
-                <span key={index} style={{ color: "grey" }}>
+                <span
+                  key={index}
+                  style={{ color: "grey", textDecoration: "underline" }}
+                >
                   {x}
                 </span>
               );
@@ -57,64 +62,144 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             }
           })}
 
-        {testOver && <p>You have finsihed the test</p>}
+        {testOver && (
+          <Row>
+            <span style={{ fontSize: "20px" }}>
+              Out of the {score.length} words you typed, you got{" "}
+              {score[1] / (score[0] + score[1])}% correct
+            </span>
+            <Col>
+              <span style={{ fontSize: "20px" }}>Correct</span>
+              <br></br>
+              {score.map((x, index) => {
+                if (x === 1) {
+                  return (
+                    <>
+                      <span style={{ fontSize: "18px" }}>
+                        {wordsArray[index]}
+                      </span>
+                      <br></br>
+                    </>
+                  );
+                }
+              })}
+            </Col>
+            <Col>
+              <span style={{ fontSize: "20px" }}>Incorrect</span>
+              <br></br>
+              {score.map((x, index) => {
+                if (x === 0) {
+                  return (
+                    <>
+                      <span style={{ fontSize: "18px" }}>
+                        {wordsArray[index]}
+                      </span>
+                      <br></br>
+                    </>
+                  );
+                }
+              })}
+            </Col>
+          </Row>
+        )}
       </div>
 
-          <Row className="justify-content-center">
-<FormControl
-        className="text-center"
-        ref={inuptRef}
-        placeholder="Type here to start test"
-        style={{ marginTop: "25px", maxWidth: "450px" }}
-        onKeyDown={(e) => {
-          //SPACE
-          if (e.key === " ") {
-            inuptRef.current.value = "";
-            setCurrentTyped("");
-            setCurrentCharIndex(0);
-            if (currentWordIndex === 99) {
-              inuptRef.current.remove();
-              setTestOver(true);
-            } else {
-              setCurrentWordIndex((currentWordIndex += 1));
-            }
-          }
-          //BACKSPACE
-          else if (e.key === "Backspace") {
-            //do nothing
-          }
-          //CHAR
-          else {
-            //only add chars to input if less than current length of word spelling
-            if (
-              currentTyped.length < wordSpellingsArray[currentWordIndex].length
-            ) {
-              setCurrentTyped((currentTyped += e.key));
-              setCurrentCharIndex((currentCharIndex += 1));
-            } else {
-              e.preventDefault();
-            }
-          }
-        }}
-        onKeyUp={(e) => {
-          if (e.key === "Backspace") {
-            console.log("backspace1!!");
-            if (currentCharIndex !== 0) {
-              setCurrentCharIndex((currentCharIndex -= 1));
+      <Row className="justify-content-center text-center">
+        <FormControl
+          className="text-center"
+          ref={inuptRef}
+          placeholder="Type here to start test"
+          style={{ marginTop: "25px", maxWidth: "450px" }}
+          onKeyDown={(e) => {
+            //starts test after first char type
+            if (displayTimer === false) {
+              setDisplayTimer(true);
             }
 
-            setCurrentTyped(currentTyped.substring(0, currentTyped.length - 1));
-          }
-        }}
-      />
+            //SPACE
+            if (e.key === " ") {
+              inuptRef.current.value = "";
+              //tally score
+              if (currentTyped == wordsArray[currentWordIndex]) {
+                var x = [...score];
+                x.push(1);
+                setScore(x);
+              } else {
+                var x = [...score];
+                x.push(0);
+                setScore(x);
+              }
+              setCurrentTyped("");
+              setCurrentCharIndex(0);
+              //end of test
+              if (currentWordIndex === 99) {
+                inuptRef.current.remove();
+                setTestOver(true);
+              } else {
+                setCurrentWordIndex((currentWordIndex += 1));
+              }
+            }
+            //BACKSPACE
+            else if (e.key === "Backspace") {
+              //do nothing
+            }
+            //CHAR
+            else {
+              //only add chars to input if less than current length of word spelling
+              if (
+                currentTyped.length <
+                wordSpellingsArray[currentWordIndex].length
+              ) {
+                setCurrentTyped((currentTyped += e.key));
+                setCurrentCharIndex((currentCharIndex += 1));
+              } else {
+                e.preventDefault();
+              }
+            }
+          }}
+          onKeyUp={(e) => {
+            if (e.key === "Backspace") {
+              console.log("backspace1!!");
+              if (currentCharIndex !== 0) {
+                setCurrentCharIndex((currentCharIndex -= 1));
+              }
 
-          </Row>
+              setCurrentTyped(
+                currentTyped.substring(0, currentTyped.length - 1)
+              );
+            }
+          }}
+        />
 
-      
+        {displayTimer && testOver === false && (
+          <Timer
+            showTimer={setDisplayTimer}
+            finished={setTestOver}
+            input={inuptRef}
+          />
+        )}
+
+        {displayTimer === false && testOver === false && (
+          <span style={{ marginTop: "25px" }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-stopwatch"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5V5.6z" />
+              <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64a.715.715 0 0 1 .012-.013l.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354a.512.512 0 0 1-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5zM8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3z" />
+            </svg>{" "}
+            60
+          </span>
+        )}
+      </Row>
 
       <hr style={{ marginTop: "50px" }}></hr>
 
-      <div >
+      <div>
         <p className="'text-center">
           Speed typing tests measure the accuracy of words typed correctly
           within a given time limit. The test above randomly generates 100

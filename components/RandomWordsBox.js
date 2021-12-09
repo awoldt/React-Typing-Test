@@ -285,7 +285,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           input={inputRef}
         />
       )}
-      {displayTimer === false && finishedTest == false && (
+      {displayTimer === false && finishedTest === false && (
         <span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
