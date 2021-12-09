@@ -13,14 +13,11 @@ export default function Home({ words, splitWords, mobile }) {
           <title>Typesnap | Free Online Typing Test</title>
           <meta
             name="description"
-            content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words. Improve your typing and challenge your friends. Optimized for mobile devices."
+            content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words. Optimized for mobile devices."
           ></meta>
           <meta property="og:title" content="How fast can you type?" />
           <meta property="og:type" content="website" />
-          <meta
-            property="og:url"
-            content="https://typesnap.com"
-          />
+          <meta property="og:url" content="https://typesnap.com" />
           <meta property="og:image" content="/favicon.ico" />
           <link rel="canonical" href="https://typesnap.com" />
         </Head>
@@ -34,14 +31,11 @@ export default function Home({ words, splitWords, mobile }) {
           <title>Typesnap | Free Online Typing Test</title>
           <meta
             name="description"
-            content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words. Improve your typing and challenge your friends."
+            content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words."
           ></meta>
           <meta property="og:title" content="How fast can you type?" />
           <meta property="og:type" content="website" />
-          <meta
-            property="og:url"
-            content="https://typesnap.com"
-          />
+          <meta property="og:url" content="https://typesnap.com" />
           <meta property="og:image" content="/favicon.ico" />
           <link rel="canonical" href="https://typesnap.com" />
         </Head>
@@ -49,7 +43,9 @@ export default function Home({ words, splitWords, mobile }) {
           style={{ backgroundColor: "rgb(51, 162, 255)", padding: "0px" }}
           fluid
         >
-          <h1>Typing Test</h1>
+          <h1 className="text-center" style={{ marginBottom: "25px" }}>
+            Typesnap
+          </h1>
 
           <RandomWordsBox wordsData={words} wordsSpellings={splitWords} />
 
