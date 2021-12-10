@@ -88,6 +88,8 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                 borderRadius: "10px",
                 color: "white",
                 fontSize: "25px",
+                marginTop: '10px',
+                marginBottom: '10px'
               }}
               key={index}
             >

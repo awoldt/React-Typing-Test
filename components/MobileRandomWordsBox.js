@@ -40,10 +40,11 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
           paddingBottom: "1px",
         }}
       >
-        <a href={"/"} style={{color: 'white', textDecoration: "none"}}><h1 className="text-center mt-2 mb-4" style={{ color: "white" }}>
-          Typesnap
-        </h1></a>
-        
+        <a href={"/"} style={{ color: "white", textDecoration: "none" }}>
+          <h1 className="text-center mt-2 mb-4" style={{ color: "white" }}>
+            Typesnap
+          </h1>
+        </a>
       </Container>
       <Container>
         <div className="text-center">
@@ -310,11 +311,14 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
         <div>
           <p className="'text-center">
-            Speed typing tests measure the accuracy of words typed correctly
-            within a given time limit. The test above randomly generates 100
-            different words for you to type as fast as possible. A light grey
-            box will hover over the current word to be spelled, and as you type
-            the screen will indicate if you&apos;ve spelled anything wrong.
+          Speed typing tests measure the accuracy of words typed correctly
+                within a given time limit. The test above randomly generates 100
+                different words for you to type as fast as possible. A light
+                grey box will hover over the current word to be spelled, and as
+                you type the screen will indicate if you&apos;ve spelled
+                anything wrong. After hitting space once each words is spelled,
+                it will be green if correct or red with a line through it if
+                incorrect.
             <br></br>
             <br></br>
             At the end you can view all the words you managed to type before the
@@ -336,6 +340,26 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             For example, if one was to type 546 characters within a 1 minute
             time limit, that person&apos;s WPM score would be 109.2
           </p>
+
+          <h2 style={{ marginTop: "25px" }}>Average Typing Speeds</h2>
+          <p>On average, speed typing results can be broken down as such: </p>
+          <ul>
+            <li>
+              20-30 words per minute: <b>Slow</b>
+            </li>
+            <li>
+              30-40 words per minute: <b>Average</b>
+            </li>
+            <li>
+              40-50 words per minute: <b>Good</b>
+            </li>
+            <li>
+              50-60 words per minute: <b>Great</b>
+            </li>
+            <li>
+              60-70 words per minute: <b>Expert</b>
+            </li>
+          </ul>
 
           <h2 style={{ marginTop: "25px" }}>How to Improve Typing Speeds</h2>
           <p>
