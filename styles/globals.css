@@ -14,3 +14,9 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.keyBtns {
+  padding: "0px";
+  margin-right: "5px";
+  cursor: "pointer";
+}

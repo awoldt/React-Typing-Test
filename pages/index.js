@@ -6,6 +6,7 @@ import MobileRandomWordsBox from "../components/MobileRandomWordsBox";
 import isMobile from "ismobilejs";
 
 export default function Home({ words, splitWords, mobile }) {
+  //MOBILE
   if (mobile === true) {
     return (
       <>
@@ -24,6 +25,7 @@ export default function Home({ words, splitWords, mobile }) {
         <MobileRandomWordsBox wordsData={words} wordsSpellings={splitWords} />
       </>
     );
+    //DESKTOP
   } else {
     return (
       <>
@@ -46,12 +48,15 @@ export default function Home({ words, splitWords, mobile }) {
           <a href={"/"} style={{color: 'white', textDecoration: "none"}}> <h1 className="text-center" style={{ marginBottom: "25px" }}>
             Typesnap
           </h1></a>
-          
 
+          <p className="text-center">Type as many words as possible in 1 minute</p>
+          
           <RandomWordsBox wordsData={words} wordsSpellings={splitWords} />
 
           <Container style={{ backgroundColor: "white" }} fluid>
+        
             <Container style={{ paddingTop: "50px" }}>
+            <hr style={{ maxWidth: "800px" }}></hr>
               <p style={{ maxWidth: "800px" }}>
                 Speed typing tests measure the accuracy of words typed correctly
                 within a given time limit. The test above randomly generates 100

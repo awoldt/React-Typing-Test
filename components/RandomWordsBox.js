@@ -32,8 +32,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       w.push(1);
       setScoreWords(w);
 
-      console.log("POINT");
-      console.log(word + " to " + spelling);
       var x = [...score];
       x[0] += 1;
       setScore(x);
@@ -43,8 +41,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       var w = [...scoreWords];
       w.push(0);
       setScoreWords(w);
-      console.log("NO POINT");
-      console.log(word + " to " + spelling);
       var x = [...score];
       x[1] += 1;
       setScore(x);
@@ -80,7 +76,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
       }}
     >
       {wordsArray.map((x, index) => {
-        //WORD CURRENTLY SPELLING, BLUE HOVER OVER COLOR
+        //WORD CURRENTLY SPELLING, GREY HOVER OVER COLOR
         if (currentWordIndex === index) {
           return (
             <div
@@ -96,20 +92,17 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
               key={index}
             >
               {wordSpellingsArray[currentWordIndex].map((y, index2) => {
-                if (index2 < currentCharIndex) {
-                  console.log(
-                    "current char: " +
-                      wordSpellingsArray[currentWordIndex][index2]
-                  );
-                  console.log("current typed char: " + currentTyped[index2]);
 
+                
+
+                if (index2 < currentCharIndex) {
                   //correct char
                   if (
                     wordSpellingsArray[currentWordIndex][index2] ===
                     currentTyped[index2]
                   ) {
                     return (
-                      <span key={index2} style={{ color: "black" }}>
+                      <span key={index2} style={{ color: "green", fontSize: '40px'}}>
                         {y}
                       </span>
                     );
@@ -117,14 +110,14 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                   //wrong char
                   else {
                     return (
-                      <span key={index2} style={{ color: "red" }}>
+                      <span key={index2} style={{ color: "red" , fontSize: '40px'}}>
                         {currentTyped[index2]}
                       </span>
                     );
                   }
                 } else {
                   return (
-                    <span key={index2} style={{ color: "#737373" }}>
+                    <span key={index2} style={{ color: "#737373", fontSize: '40px'}}>
                       {y}
                     </span>
                   );
@@ -223,7 +216,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
             //SPACE
             if (e.key === " ") {
-              console.log("space");
               //if space after last word, end test
               if (wordsData.length === currentWordIndex + 1) {
                 if (testOver === false) {
@@ -256,7 +248,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
             }
             //CHARACTER INPUT
             else {
-              console.log("input key");
               //dont let user input anymore if lengtrh of currentTyped is length of currentWord
               if (removeSpaces(currentTyped).length === currentWordLength) {
                 e.preventDefault();
@@ -270,7 +261,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
         }}
         onKeyUp={(e) => {
           if (e.key === "Backspace") {
-            console.log("backspace");
             if (currentCharIndex !== 0) {
               setCurrentCharIndex((currentCharIndex -= 1));
             }
@@ -324,14 +314,13 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
       {finishedTest && (
         <>
-          <br></br>
-          <br></br>
-          <code>Your WPM score is {charsTyped / 5}</code>
+    
 
           <RestartTest
             finalScores={score}
             wordSpellings={scoreWords}
             words={wordsData}
+            characters_typed={charsTyped}
           />
         </>
       )}

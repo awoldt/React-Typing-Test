@@ -232,7 +232,6 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             }}
             onKeyUp={(e) => {
               if (e.key === "Backspace") {
-                console.log("backspace1!!");
                 if (currentCharIndex !== 0) {
                   setCurrentCharIndex((currentCharIndex -= 1));
                 }

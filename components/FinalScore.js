@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import ScoreBoard from "../components/ScoreBoard";
 
-const FinalScore = ({ finalScores, wordSpellings, words }) => {
+const FinalScore = ({ finalScores, wordSpellings, words, characters_typed}) => {
   console.log("correct: " + finalScores[0]);
   console.log("incorrect " + finalScores[1]);
   console.log(finalScores[0] / (finalScores[0] + finalScores[1]));
@@ -12,6 +12,7 @@ const FinalScore = ({ finalScores, wordSpellings, words }) => {
       style={{ marginTop: "25px", padding: "10px", backgroundColor: '#e6e6e6'}}
       className="text-center"
     >
+      <code  style={{display: 'block', marginBottom: '50px', marginTop: '50px', fontSize: '20px'}}>You got a WPM score of {characters_typed/5}</code>
       <Button
         variant="danger"
         onClick={() => {
