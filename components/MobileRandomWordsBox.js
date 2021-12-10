@@ -40,9 +40,10 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
           paddingBottom: "1px",
         }}
       >
-        <h1 className="text-center mt-2 mb-4" style={{ color: "white" }}>
+        <a href={"/"} style={{color: 'white', textDecoration: "none"}}><h1 className="text-center mt-2 mb-4" style={{ color: "white" }}>
           Typesnap
-        </h1>
+        </h1></a>
+        
       </Container>
       <Container>
         <div className="text-center">

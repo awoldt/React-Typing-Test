@@ -43,9 +43,10 @@ export default function Home({ words, splitWords, mobile }) {
           style={{ backgroundColor: "rgb(51, 162, 255)", padding: "0px" }}
           fluid
         >
-          <h1 className="text-center" style={{ marginBottom: "25px" }}>
+          <a href={"/"} style={{color: 'white', textDecoration: "none"}}> <h1 className="text-center" style={{ marginBottom: "25px" }}>
             Typesnap
-          </h1>
+          </h1></a>
+          
 
           <RandomWordsBox wordsData={words} wordsSpellings={splitWords} />
 
