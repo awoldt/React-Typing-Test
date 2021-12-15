@@ -88,23 +88,23 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                 borderRadius: "10px",
                 color: "white",
                 fontSize: "25px",
-                marginTop: '10px',
-                marginBottom: '10px'
+                marginTop: "10px",
+                marginBottom: "10px",
               }}
               key={index}
             >
               {wordSpellingsArray[currentWordIndex].map((y, index2) => {
-
-                
-
                 if (index2 < currentCharIndex) {
                   //correct char
                   if (
                     wordSpellingsArray[currentWordIndex][index2] ===
-                    currentTyped[index2]
+                    currentTyped[index2].toLocaleLowerCase()
                   ) {
                     return (
-                      <span key={index2} style={{ color: "green", fontSize: '40px'}}>
+                      <span
+                        key={index2}
+                        style={{ color: "green", fontSize: "40px" }}
+                      >
                         {y}
                       </span>
                     );
@@ -112,14 +112,20 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
                   //wrong char
                   else {
                     return (
-                      <span key={index2} style={{ color: "red" , fontSize: '40px'}}>
+                      <span
+                        key={index2}
+                        style={{ color: "red", fontSize: "40px" }}
+                      >
                         {currentTyped[index2]}
                       </span>
                     );
                   }
                 } else {
                   return (
-                    <span key={index2} style={{ color: "#737373", fontSize: '40px'}}>
+                    <span
+                      key={index2}
+                      style={{ color: "#737373", fontSize: "40px" }}
+                    >
                       {y}
                     </span>
                   );
@@ -210,6 +216,8 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
           marginBottom: "15px",
         }}
         onKeyDown={(e) => {
+          console.log(e);
+
           //wont allow you to type after test is finished
           if (finishedTest === true) {
             e.preventDefault();
@@ -231,7 +239,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
               } else {
                 //need to update wordsData array to contain word how user spelled it after hitting space
                 var x = [...wordsArray];
-                x[currentWordIndex] = currentTyped;
+                x[currentWordIndex] = currentTyped.toLowerCase();
 
                 setWordsArray(x);
 
@@ -248,7 +256,31 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
             else if (e.key === "Backspace") {
               //do nothing
             }
-            //CHARACTER INPUT
+            //CAPS LOCK
+            else if (e.key === "CapsLock") {
+              e.preventDefault();
+            }
+            //SHIFT
+            else if (e.key === "Shift") {
+              e.preventDefault();
+            }
+            //TAB
+            else if (e.key === "Tab") {
+              e.preventDefault();
+            }
+            //CONTROL
+            else if (e.key === "Control") {
+              e.preventDefault();
+            }
+            //ENTER
+            else if (e.key === "Enter") {
+              e.preventDefault();
+            }
+            //ALT
+            else if (e.key === "Alt") {
+              e.preventDefault();
+            }
+            //CHARACTER INPUT (IMPORTANT ONES)
             else {
               //dont let user input anymore if lengtrh of currentTyped is length of currentWord
               if (removeSpaces(currentTyped).length === currentWordLength) {
@@ -316,8 +348,6 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
       {finishedTest && (
         <>
-    
-
           <RestartTest
             finalScores={score}
             wordSpellings={scoreWords}

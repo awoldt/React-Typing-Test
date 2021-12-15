@@ -82,7 +82,7 @@ export default function Home({ words, splitWords, mobile }) {
               <p style={{ maxWidth: "800px" }}>
                 WPM, or better known as Words per Minute, is the speed in which
                 one can type on a keyboard. Calculating WPM is simply dividing
-                how many characters were typed during the timeframe by 5. WPM
+                how many characters were typed within 1 minute divided by 5. WPM
                 formula considers 5 keystrokes as a word.
                 <br></br>
                 <br></br>
@@ -90,7 +90,8 @@ export default function Home({ words, splitWords, mobile }) {
                 <br></br>
                 <br></br>
                 For example, if one was to type 546 characters within a 1 minute
-                time limit, that person&apos;s WPM score would be 109.2
+                time limit, that person&apos;s WPM score would be 109.2, meaning
+                they can type on average 109 words every minute.
               </p>
 
               <h2 style={{ marginTop: "25px" }}>Average Typing Speeds</h2>

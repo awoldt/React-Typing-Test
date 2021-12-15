@@ -54,7 +54,7 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               if (index < currentCharIndex) {
                 //correctly spelled recent char
                 if (
-                  currentTyped[index].toLocaleLowerCase() ===
+                  currentTyped[index].toLowerCase() ===
                   wordsSpellings[currentWordIndex][index]
                 ) {
                   return (
@@ -191,7 +191,9 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               if (e.key === " ") {
                 inuptRef.current.value = "";
                 //tally score
-                if (currentTyped == wordsArray[currentWordIndex]) {
+                if (
+                  currentTyped.toLowerCase() == wordsArray[currentWordIndex]
+                ) {
                   var x = [...score];
                   x.push(1);
                   setScore(x);
@@ -216,7 +218,31 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
               else if (e.key === "Backspace") {
                 //do nothing
               }
-              //CHAR
+              //CAPS LOCK
+              else if (e.key === "CapsLock") {
+                e.preventDefault();
+              }
+              //SHIFT
+              else if (e.key === "Shift") {
+                e.preventDefault();
+              }
+              //TAB
+              else if (e.key === "Tab") {
+                e.preventDefault();
+              }
+              //CONTROL
+              else if (e.key === "Control") {
+                e.preventDefault();
+              }
+              //ENTER
+              else if (e.key === "Enter") {
+                e.preventDefault();
+              }
+              //ALT
+              else if (e.key === "Alt") {
+                e.preventDefault();
+              }
+              //CHARACTER INPUT (IMPORTANT)
               else {
                 //only add chars to input if less than current length of word spelling
                 if (
@@ -311,14 +337,13 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
         <div>
           <p className="'text-center">
-          Speed typing tests measure the accuracy of words typed correctly
-                within a given time limit. The test above randomly generates 100
-                different words for you to type as fast as possible. A light
-                grey box will hover over the current word to be spelled, and as
-                you type the screen will indicate if you&apos;ve spelled
-                anything wrong. After hitting space once each words is spelled,
-                it will be green if correct or red with a line through it if
-                incorrect.
+            Speed typing tests measure the accuracy of words typed correctly
+            within a given time limit. The test above randomly generates 100
+            different words for you to type as fast as possible. A light grey
+            box will hover over the current word to be spelled, and as you type
+            the screen will indicate if you&apos;ve spelled anything wrong.
+            After hitting space once each words is spelled, it will be green if
+            correct or red with a line through it if incorrect.
             <br></br>
             <br></br>
             At the end you can view all the words you managed to type before the
@@ -330,7 +355,7 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
           <p>
             WPM, or better known as Words per Minute, is the speed in which one
             can type on a keyboard. Calculating WPM is simply dividing how many
-            characters were typed during the timeframe by 5. WPM formula
+            characters were typed within 1 minute divided by 5. WPM formula
             considers 5 keystrokes as a word.
             <br></br>
             <br></br>
@@ -338,7 +363,8 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             <br></br>
             <br></br>
             For example, if one was to type 546 characters within a 1 minute
-            time limit, that person&apos;s WPM score would be 109.2
+            time limit, that person&apos;s WPM score would be 109.2, meaning
+            they can type on average 109 words every minute.
           </p>
 
           <h2 style={{ marginTop: "25px" }}>Average Typing Speeds</h2>
