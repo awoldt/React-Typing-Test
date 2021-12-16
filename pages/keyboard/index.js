@@ -1,19 +1,24 @@
 import React from "react";
 import { Row, Col, Container, Dropdown } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import KeyBtn from "../../components/KeyBtn";
 
 const Index = () => {
   const [keyColor, setKeyColor] = useState("rgb(0, 102, 255)"); //default blue key color
   const [keyBorder, setKeyBorder] = useState("4px solid rgb(0, 56, 140)"); //default blue key border
   const [keyboardBackplate, setKeyboardBackplate] = useState("rgb(0, 31, 77)"); //default blue backplate color
+  const [userText, setUserText] = useState("");
 
   const upperRow = ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"];
   const middleRow = ["A", "S", "S", "D", "F", "G", "H", "J", "K", "L"];
   const lowerRow = ["Z", "X", "C", "V", "B", "N", "M"];
 
+  const textareaRef = useRef();
+
   return (
     <Container>
+      <textarea style={{ width: "100%", height: "250px" }} ref={textareaRef} />
+
       <Dropdown>
         <Dropdown.Toggle variant="secondary">Theme</Dropdown.Toggle>
 
@@ -22,7 +27,7 @@ const Index = () => {
             onClick={() => {
               setKeyColor("rgb(0, 102, 255)");
               setKeyboardBackplate("rgb(0, 31, 77)");
-              setKeyBorder('4px solid rgb(0, 56, 140)')
+              setKeyBorder("4px solid rgb(0, 56, 140)");
             }}
           >
             Blue
@@ -31,7 +36,7 @@ const Index = () => {
             onClick={() => {
               setKeyColor("rgb(179, 0, 0)");
               setKeyboardBackplate("rgb(77, 0, 0)");
-              setKeyBorder('4px solid rgb(128, 0, 0)')
+              setKeyBorder("4px solid rgb(128, 0, 0)");
             }}
           >
             Red
@@ -42,7 +47,7 @@ const Index = () => {
         style={{
           backgroundColor: keyboardBackplate,
           padding: "25px",
-          marginTop: "100px",
+          marginTop: "10px",
           borderRadius: "10px",
         }}
       >
@@ -56,7 +61,7 @@ const Index = () => {
           {upperRow.map((x, index) => {
             return (
               <Col
-              key={index}
+                key={index}
                 style={{
                   cursor: "pointer",
                   padding: "0px",
@@ -66,7 +71,13 @@ const Index = () => {
                 }}
                 className="text-center m-2"
               >
-                <KeyBtn keyValue={x} color={keyColor} />
+                <KeyBtn
+                  keyValue={x}
+                  color={keyColor}
+                  text={textareaRef}
+                  addText={setUserText}
+                  textAdded={userText}
+                />
               </Col>
             );
           })}
@@ -81,7 +92,7 @@ const Index = () => {
           {middleRow.map((x, index) => {
             return (
               <Col
-              key={index}
+                key={index}
                 style={{
                   cursor: "pointer",
                   padding: "0px",
@@ -91,7 +102,13 @@ const Index = () => {
                 }}
                 className="text-center m-2"
               >
-                <KeyBtn keyValue={x} color={keyColor} />
+                <KeyBtn
+                  keyValue={x}
+                  color={keyColor}
+                  text={textareaRef}
+                  addText={setUserText}
+                  textAdded={userText}
+                />
               </Col>
             );
           })}
@@ -106,7 +123,7 @@ const Index = () => {
           {lowerRow.map((x, index) => {
             return (
               <Col
-              key={index}
+                key={index}
                 style={{
                   cursor: "pointer",
                   padding: "0px",
@@ -116,7 +133,13 @@ const Index = () => {
                 }}
                 className="text-center m-2"
               >
-                <KeyBtn keyValue={x} color={keyColor} />
+                <KeyBtn
+                  keyValue={x}
+                  color={keyColor}
+                  text={textareaRef}
+                  addText={setUserText}
+                  textAdded={userText}
+                />
               </Col>
             );
           })}
@@ -129,7 +152,7 @@ const Index = () => {
               border: keyBorder,
               width: "800px",
               height: "50px",
-              userSelect: 'none'
+              userSelect: "none",
             }}
           >
             Space
