@@ -60,6 +60,7 @@ export default function Home({ words, splitWords, mobile }) {
 
           <Container style={{ backgroundColor: "white" }} fluid>
             <Container style={{ paddingTop: "50px" }}>
+              <a href={'/keyboard'} style={{textDecoration: 'none'}}><img src='/keyboard.png'/> Virual Keyboard</a>
               <hr style={{ maxWidth: "800px" }}></hr>
               <p style={{ maxWidth: "800px" }}>
                 Speed typing tests measure the accuracy of words typed correctly
