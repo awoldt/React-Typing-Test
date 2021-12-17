@@ -1,17 +1,12 @@
 import React from "react";
-import { Row, Col, Container, Dropdown, Alert} from "react-bootstrap";
+import { Row, Col, Container, Dropdown, Alert } from "react-bootstrap";
 import { useState, useRef } from "react";
 import KeyBtn from "../../components/KeyBtn";
 import Head from "next/head";
 import isMobile from "ismobilejs";
+import CustomNav from "../../components/CustomNav";
 
-
-
-const Index = ({mobile}) => {
-
-
-
-
+const Index = ({ mobile }) => {
   const [keyColor, setKeyColor] = useState("rgb(0, 102, 255)"); //default blue key color
   const [keyBorder, setKeyBorder] = useState("4px solid rgb(0, 56, 140)"); //default blue key border
   const [keyboardBackplate, setKeyboardBackplate] = useState("rgb(0, 31, 77)"); //default blue backplate color
@@ -27,7 +22,7 @@ const Index = ({mobile}) => {
   return (
     <>
       <Head>
-        <title>Online Virtual Keyboard</title>
+        <title>Online Virtual Keyboard | Typesnap</title>
         <meta
           name="description"
           content="Type using a virual keyboard with multiple built-in themes. Built with Reactjs, works on any browser."
@@ -38,22 +33,14 @@ const Index = ({mobile}) => {
         <link rel="canonical" href="https://typesnap.com/keyboard" />
       </Head>
 
-      <Container
-        style={{ backgroundColor: "rgb(51, 162, 255)", paddingBottom: "5px" }}
-        fluid
-      >
-        <a href={"/"} style={{ color: "white", textDecoration: "none" }}>
-          {" "}
-          <h1 className="text-center" style={{ marginBottom: "25px" }}>
-            Typesnap
-          </h1>
-        </a>
-      </Container>
+      <CustomNav />
 
       <Container>
-
-        {mobile && <Alert variant={'danger'} style={{marginTop: '15px'}}>This page is not optimized for mobile</Alert>}
-
+        {mobile && (
+          <Alert variant={"danger"} style={{ marginTop: "15px" }}>
+            This page is not optimized for mobile
+          </Alert>
+        )}
 
         <textarea
           style={{
@@ -61,7 +48,7 @@ const Index = ({mobile}) => {
             height: "250px",
             marginTop: "25px",
             marginBottom: "25px",
-            border: '3px solid #cccccc'
+            border: "3px solid #cccccc",
           }}
           ref={textareaRef}
           disabled
@@ -97,6 +84,7 @@ const Index = ({mobile}) => {
             padding: "25px",
             marginTop: "5px",
             borderRadius: "10px",
+            marginBottom: "25px",
           }}
         >
           {" "}
@@ -227,9 +215,33 @@ const Index = ({mobile}) => {
                   spacebarRef.current.style.backgroundColor = "rgb(179, 0, 0)";
                 }
               }}
-            >
-            </div>
+            ></div>
           </Row>
+        </div>
+        <h1 className="text-center">Virtual Keyboard</h1>
+        <p className="text-center">
+          Use your mouse to type in the textbox above
+        </p>
+        <div
+          className="text-secondary text-center"
+          style={{ fontSize: "10px", marginBottom: "25px" }}
+        >
+          Icons made by{" "}
+          <a
+            href="https://www.freepik.com"
+            title="Freepik"
+            style={{ textDecoration: "none" }}
+          >
+            Freepik
+          </a>{" "}
+          from{" "}
+          <a
+            href="https://www.flaticon.com/"
+            title="Flaticon"
+            style={{ textDecoration: "none" }}
+          >
+            www.flaticon.com
+          </a>
         </div>
       </Container>
     </>
@@ -241,11 +253,8 @@ export default Index;
 export async function getServerSideProps({ req }) {
   const userAgent = isMobile(req.headers["user-agent"]).any; //true if mobile device false if desktop
 
-  
-
   return {
     props: {
-     
       mobile: userAgent,
     },
   };

@@ -12,6 +12,8 @@ import {
   RedditIcon,
 } from "react-share";
 
+import CustomNav from "./CustomNav";
+
 const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
   const [wordsArray, setWordsArray] = useState(wordsData);
   const [wordSpellingsArray, setWordSpellingsArray] = useState(wordsSpellings);
@@ -32,20 +34,7 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   return (
     <>
-      <Container
-        fluid
-        style={{
-          backgroundColor: "rgb(51, 162, 255)",
-          paddingTop: "5px",
-          paddingBottom: "1px",
-        }}
-      >
-        <a href={"/"} style={{ color: "white", textDecoration: "none" }}>
-          <h1 className="text-center mt-2 mb-4" style={{ color: "white" }}>
-            Typesnap
-          </h1>
-        </a>
-      </Container>
+      <CustomNav />
       <Container>
         <div className="text-center">
           {testOver === false &&
@@ -336,9 +325,10 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
         </div>
 
         <div>
+          <h1>Typesnap</h1>
           <p className="'text-center">
             Speed typing tests measure the accuracy of words typed correctly
-            within a given time limit. The test above randomly generates 100
+            within a given time limit. Typesnap speed typing test randomly generates 100
             different words for you to type as fast as possible. A light grey
             box will hover over the current word to be spelled, and as you type
             the screen will indicate if you&apos;ve spelled anything wrong.

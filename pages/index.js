@@ -4,6 +4,7 @@ import randomWords from "random-words";
 import Head from "next/head";
 import MobileRandomWordsBox from "../components/MobileRandomWordsBox";
 import isMobile from "ismobilejs";
+import CustomNav from "../components/CustomNav";
 
 export default function Home({ words, splitWords, mobile }) {
   //MOBILE
@@ -41,36 +42,31 @@ export default function Home({ words, splitWords, mobile }) {
           <meta property="og:image" content="https://typesnap.com/typing.jpg" />
           <link rel="canonical" href="https://typesnap.com" />
         </Head>
+
+        <CustomNav />
+
         <Container
           style={{ backgroundColor: "rgb(51, 162, 255)", padding: "0px" }}
           fluid
         >
-          <a href={"/"} style={{ color: "white", textDecoration: "none" }}>
-            {" "}
-            <h1 className="text-center" style={{ marginBottom: "25px" }}>
-              Typesnap
-            </h1>
-          </a>
-
-          <p className="text-center">
-            Type as many words as possible in 1 minute
-          </p>
-
           <RandomWordsBox wordsData={words} wordsSpellings={splitWords} />
 
           <Container style={{ backgroundColor: "white" }} fluid>
             <Container style={{ paddingTop: "50px" }}>
-              <a href={'/keyboard'} style={{textDecoration: 'none'}}><img src='/keyboard.png'/> Virual Keyboard</a>
+              <a href={"/keyboard"} style={{ textDecoration: "none" }}>
+                <img src="/keyboard.png" alt="keyboard" /> Virtual Keyboard
+              </a>
               <hr style={{ maxWidth: "800px" }}></hr>
+              <h1>Typesnap</h1>
               <p style={{ maxWidth: "800px" }}>
                 Speed typing tests measure the accuracy of words typed correctly
-                within a given time limit. The test above randomly generates 100
-                different words for you to type as fast as possible. A light
-                grey box will hover over the current word to be spelled, and as
-                you type the screen will indicate if you&apos;ve spelled
-                anything wrong. After hitting space once each words is spelled,
-                it will be green if correct or red with a line through it if
-                incorrect.
+                within a given time limit. Typesnap speed typing test randomly
+                generates 100 different words for you to type as fast as
+                possible. A light grey box will hover over the current word to
+                be spelled, and as you type the screen will indicate if
+                you&apos;ve spelled anything wrong. After hitting space once
+                each words is spelled, it will be green if correct or red with a
+                line through it if incorrect.
                 <br></br>
                 <br></br>
                 At the end you can view all the words you managed to type before
