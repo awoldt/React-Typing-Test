@@ -61,7 +61,7 @@ const RandomWordsBox = ({ wordsData, wordsSpellings }) => {
 
   useEffect(() => {
     setCurrentWordLength(currentWord.length);
-  }, [currentTyped]); 
+  }, [currentTyped]);
 
   return (
     <div
