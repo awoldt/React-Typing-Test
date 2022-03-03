@@ -65,6 +65,7 @@ export default function Home({ words, splitWords, mobile }) {
           style={{ backgroundColor: "rgb(51, 162, 255)", padding: "0px" }}
           fluid
         >
+          <div id="ezoic-pub-ad-placeholder-101"> </div>
           <RandomWordsBox wordsData={words} wordsSpellings={splitWords} />
 
           <Container style={{ backgroundColor: "white" }} fluid>
@@ -87,6 +88,7 @@ export default function Home({ words, splitWords, mobile }) {
                 calculated and displayed. If you don&apos;t like your score, you
                 can always try again!
               </p>
+              <div id="ezoic-pub-ad-placeholder-102"> </div>
               <h2 style={{ marginTop: "25px" }}>What is WPM</h2>
               <p style={{ maxWidth: "800px" }}>
                 WPM, or better known as Words per Minute, is the speed in which
