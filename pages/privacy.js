@@ -11,7 +11,7 @@ const privacy = () => {
       </div>
 
       <h1>Privacy Policy</h1>
-      <p className="text-secondary">Last updated 2/28/2022</p>
+      <p className="text-secondary">Last updated 3/3/2022</p>
 
       <p>
         This Privacy Policy document contains types of information that is
@@ -27,10 +27,10 @@ const privacy = () => {
 
       <h2>Information we collect</h2>
       <p>
-        The only information that is collected is the behavior of users, such as
-        page views, clicks, and how long each browsing session is. There is no
-        personally identifiable information that is collected from users. Google
-        analytics is used to obtain this information.
+        Information collected is from user behavior such as engagement, time
+        spent on site, and technology used. Other information collected on
+        users are for advertising purposes. Note that
+        Typesnap does not have any access to this advertising and personally identifiable data.
       </p>
 
       <h2>How we use your information</h2>
@@ -38,15 +38,16 @@ const privacy = () => {
       <p>We use the information collected to:</p>
 
       <ul>
+        <li>Advertise</li>
         <li>Analyze website traffic</li>
       </ul>
 
       <h2>Log Files</h2>
 
       <p>
-        Typesnap follows a standard procedure of using log files. These files log
-        visitors when they visit websites. All hosting companies do this and a
-        part of hosting services&apos; analytics. The information collected by
+        Typesnap follows a standard procedure of using log files. These files
+        log visitors when they visit websites. All hosting companies do this and
+        a part of hosting services&apos; analytics. The information collected by
         log files include internet protocol (IP) addresses, browser type,
         Internet Service Provider (ISP), date and time stamp, referring/exit
         pages, and possibly the number of clicks. These are not linked to any
@@ -89,6 +90,15 @@ const privacy = () => {
             target={"_blank"}
           >
             Google
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://www.quantcast.com/privacy/"
+            rel="noreferrer"
+            target={"_blank"}
+          >
+            Quantcast
           </a>
         </li>
       </ul>

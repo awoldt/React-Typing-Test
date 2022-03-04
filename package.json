@@ -1,5 +1,5 @@
 {
-  "name": "typing",
+  "name": "typesnap",
   "private": true,
   "scripts": {
     "dev": "next dev",
