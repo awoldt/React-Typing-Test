@@ -5,23 +5,8 @@ import Head from "next/head";
 import MobileRandomWordsBox from "../components/MobileRandomWordsBox";
 import isMobile from "ismobilejs";
 import CustomNav from "../components/CustomNav";
-import { useEffect } from "react";
 
 export default function Home({ words, splitWords, mobile }) {
-  useEffect(() => {
-    const ga = document.createElement("script");
-    ga.src = "https://www.googletagmanager.com/gtag/js?id=G-BVKND8B873";
-    ga.async = true;
-    document.head.appendChild(ga);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-
-    gtag("config", "G-BVKND8B873");
-  }, []);
 
   //MOBILE
   if (mobile === true) {
