@@ -7,7 +7,6 @@ import isMobile from "ismobilejs";
 import CustomNav from "../components/CustomNav";
 
 export default function Home({ words, splitWords, mobile }) {
-
   //MOBILE
   if (mobile === true) {
     return (
@@ -151,7 +150,10 @@ export default function Home({ words, splitWords, mobile }) {
                 </a>
               </div>
             </Container>
-            <p className="text-center">
+            <p
+              className="text-center"
+              style={{ marginBottom: "50px", marginTop: "50px" }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -172,18 +174,6 @@ export default function Home({ words, splitWords, mobile }) {
                 Awoldt
               </a>
             </p>
-            <div
-              className="text-center"
-              style={{ marginTop: "20px", marginBottom: "20px" }}
-            >
-              <a
-                href={"/privacy"}
-                style={{ textDecoration: "none" }}
-                className="text-secondary"
-              >
-                Privacy
-              </a>
-            </div>
           </Container>
         </Container>
       </>

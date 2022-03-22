@@ -433,18 +433,6 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
             Awoldt
           </a>
         </p>
-        <div
-          className="text-center"
-          style={{ marginTop: "20px", marginBottom: "20px" }}
-        >
-          <a
-            href={"/privacy"}
-            style={{ textDecoration: "none" }}
-            className="text-secondary"
-          >
-            Privacy
-          </a>
-        </div>
       </Container>
     </>
   );
