@@ -12,16 +12,19 @@ export default function Home({ words, splitWords, mobile }) {
     return (
       <>
         <Head>
-          <title>Typesnap | Free Online Typing Test</title>
+          <title>Free Online Typing Test</title>
           <meta
             name="description"
             content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words. Optimized for mobile devices."
           ></meta>
           <meta property="og:title" content="How fast can you type?" />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://typesnap.com" />
+          <meta
+            property="og:url"
+            content="https://typesnap-vercel.vercel.app/"
+          />
           <meta property="og:image" content="https://typesnap.com/typing.jpg" />
-          <link rel="canonical" href="https://typesnap.com" />
+          <link rel="canonical" href="https://typesnap-vercel.vercel.app/" />
         </Head>
         <MobileRandomWordsBox wordsData={words} wordsSpellings={splitWords} />
       </>
@@ -31,16 +34,19 @@ export default function Home({ words, splitWords, mobile }) {
     return (
       <>
         <Head>
-          <title>Typesnap | Free Online Typing Test</title>
+          <title>Free Online Typing Test</title>
           <meta
             name="description"
             content="Test your typing skills and see how many words per minute you can type. You have 60 seconds to type all 100 randomly generated words."
           ></meta>
           <meta property="og:title" content="How fast can you type?" />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://typesnap.com" />
+          <meta
+            property="og:url"
+            content="https://typesnap-vercel.vercel.app/"
+          />
           <meta property="og:image" content="https://typesnap.com/typing.jpg" />
-          <link rel="canonical" href="https://typesnap.com" />
+          <link rel="canonical" href="https://typesnap-vercel.vercel.app/" />
         </Head>
 
         <CustomNav />
@@ -54,10 +60,10 @@ export default function Home({ words, splitWords, mobile }) {
 
           <Container style={{ backgroundColor: "white" }} fluid>
             <Container style={{ paddingTop: "50px" }}>
-              <h1>Typesnap</h1>
+              <h1>Free Typing Test</h1>
               <p style={{ maxWidth: "800px" }}>
                 Speed typing tests measure the accuracy of words typed correctly
-                within a given time limit. Typesnap speed typing test randomly
+                within a given time limit. This speed typing test randomly
                 generates 100 different words for you to type as fast as
                 possible. A light grey box will hover over the current word to
                 be spelled, and as you type the screen will indicate if
