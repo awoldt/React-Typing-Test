@@ -308,27 +308,27 @@ const MobileRandomWordsBox = ({ wordsData, wordsSpellings }) => {
         <p className="text-center">Challenge your friends</p>
         <div className="text-center" style={{ marginBottom: "25px" }}>
           <FacebookShareButton
-            url={"https://typesnap.com"}
+            url={"https://typesnap-vercel.vercel.app/"}
             style={{ marginRight: "8px" }}
           >
             <FacebookIcon size={40} />
           </FacebookShareButton>
           <TwitterShareButton
-            url={"https://typesnap.com"}
+            url={"https://typesnap-vercel.vercel.app/"}
             style={{ marginRight: "8px" }}
           >
             <TwitterIcon size={40} />
           </TwitterShareButton>
-          <RedditShareButton url={"https://typesnap.com"}>
+          <RedditShareButton url={"https://typesnap-vercel.vercel.app/"}>
             <RedditIcon size={40} />
           </RedditShareButton>
         </div>
 
         <div>
-          <h1>Typesnap</h1>
+          <h1>Speed Typing Test</h1>
           <p className="'text-center">
             Speed typing tests measure the accuracy of words typed correctly
-            within a given time limit. Typesnap speed typing test randomly
+            within a given time limit. This speed typing test randomly
             generates 100 different words for you to type as fast as possible. A
             light grey box will hover over the current word to be spelled, and
             as you type the screen will indicate if you&apos;ve spelled anything

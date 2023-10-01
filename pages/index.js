@@ -23,7 +23,7 @@ export default function Home({ words, splitWords, mobile }) {
             property="og:url"
             content="https://typesnap-vercel.vercel.app/"
           />
-          <meta property="og:image" content="https://typesnap.com/typing.jpg" />
+          <meta property="og:image" content="https://typesnap-vercel.vercel.app/typing.jpg" />
           <link rel="canonical" href="https://typesnap-vercel.vercel.app/" />
         </Head>
         <MobileRandomWordsBox wordsData={words} wordsSpellings={splitWords} />
